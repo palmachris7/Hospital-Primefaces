@@ -1,4 +1,4 @@
-package com.palma.demojsf.config;
+package com.palma.app.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.MessageCodesResolver;
@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        // faire correspondre la route principale à la vue index.xhtml
+        // Ruta al index Principal
         registry.addViewController("/").setViewName("index.xhtml");
     }
 

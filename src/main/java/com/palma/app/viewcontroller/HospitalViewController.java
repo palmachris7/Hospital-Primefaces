@@ -1,10 +1,10 @@
-package com.palma.demojsf.viewcontroller;
+package com.palma.app.viewcontroller;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.palma.demojsf.models.Hospital;
-import com.palma.demojsf.repositories.HospitalRepository;
+import com.palma.app.models.Hospital;
+import com.palma.app.repositories.HospitalRepository;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
