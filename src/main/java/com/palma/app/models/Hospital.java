@@ -20,7 +20,7 @@ import lombok.Data;
 @Table(name = "HOSPITAL")
 
 @NamedStoredProcedureQueries({
-		@NamedStoredProcedureQuery(name = "addHospitalProcedure", procedureName = "ADD_EMPLOYEE_PROCEDURE", resultClasses = {
+		@NamedStoredProcedureQuery(name = "addHospitalProcedure", procedureName = "ADD_HOSPITAL_PROCEDURE", resultClasses = {
 				Hospital.class }, parameters = {
 						@StoredProcedureParameter(name = "nombre", type = String.class, mode = ParameterMode.IN),
 						@StoredProcedureParameter(name = "antiguedad", type = String.class, mode = ParameterMode.IN),
@@ -35,6 +35,8 @@ import lombok.Data;
 						@StoredProcedureParameter(name = "sede", type = String.class, mode = ParameterMode.IN),
 
 		}),
+		@NamedStoredProcedureQuery(name = "listarHospitalProcedure", procedureName = "LIST_HOSPITAL_PROCEDURE", resultClasses = {
+				Hospital.class })
 })
 public class Hospital {
 	@Id

@@ -7,7 +7,7 @@ import com.palma.app.models.Hospital;
 import com.palma.app.repositories.HospitalRepository;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.util.List;
 

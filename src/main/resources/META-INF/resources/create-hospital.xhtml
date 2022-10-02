@@ -11,23 +11,34 @@ xmlns:p="http://primefaces.org/ui">
 
 <h:body>
     <h:form>
-        <h3>Create car</h3>
+        <h3>Agregar Nuevo Hospital</h3>
         <div class="ui-fluid p-formgrid p-grid">
             <div class="p-field p-col">
-                <p:outputLabel for="brand" value="Brand" />
-                <p:inputText value="#{hospitalViewController.hospital.brand}" id="brand" />
+                <p:outputLabel for="nombre" value="Nombre" />
+                <p:inputText value="#{hospitalViewController.hospital.nombre}" id="nombre" />
             </div>
             <div class="p-field p-col">
-                <p:outputLabel for="color" value="Color" />
-                <p:inputText value="#{hospitalViewController.hospital.color}" id="color" />
+                <p:outputLabel for="antiguedad" value="Antiguedad" />
+                <p:inputText value="#{hospitalViewController.hospital.antiguedad}" id="antiguedad" />
             </div>
             <div class="p-field p-col">
-                <p:outputLabel for="year" value="Year" />
-                <p:inputText value="#{hospitalViewController.hospital.year}" id="year" />
+                <p:outputLabel for="area" value="Area" />
+                <p:inputText value="#{hospitalViewController.hospital.area}" id="area" />
+            </div>
+            <div class="p-field p-col">
+                <p:outputLabel for="fecha" value="Fecha" />
+                <p:inputText value="#{hospitalViewController.hospital.fecharegistro}" id="fecha" />
+            </div>
+            <div class="p-field p-col">
+                <p:outputLabel for="imagen" value="Imagen" />
+                <p:inputText value="#{hospitalViewController.hospital.imagen}" id="imagen" />
+            </div>
+            <div class="p-field p-col">
+                <p:outputLabel for="detalles" value="Detalles" />
+                <p:inputText value="#{hospitalViewController.hospital.detalles}" id="detalles" />
             </div>
           <br></br>
-            <p:commandLink id="nonAjax" action="#{hospitalViewController.saveHospital}" style="margin:20px;" ajax="false">
-          
+            <p:commandLink id="nonAjax" action="#{hospitalViewController.saveHospital}" ajax="false">
                 <p:button  icon="pi pi-save" value="Guardar" styleClass="ui-button-raised" />
             </p:commandLink>
         </div>

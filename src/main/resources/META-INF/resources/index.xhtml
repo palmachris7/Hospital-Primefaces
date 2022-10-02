@@ -13,20 +13,34 @@
 <!-- Tabla -->
 <p:dataTable var="hospital" value="#{hospitalViewController.hospitales}">
     <p:column headerText="Id">
-        <h:outputText value="#{hospital.id}" />
+        <h:outputText value="#{hospital.idhospital}" />
+    </p:column>
+    <p:column headerText="Nombre">
+        <h:outputText value="#{hospital.nombre}" />
     </p:column>
 
-    <p:column headerText="Year">
-        <h:outputText value="#{hospital.year}" />
+    <p:column headerText="Antiguedad">
+        <h:outputText value="#{hospital.antiguedad}" />
     </p:column>
-
-    <p:column headerText="Brand">
-        <h:outputText value="#{hospital.brand}" />
+    <p:column headerText="Distrito">
+        <h:outputText value="#{hospital.distrito.descdistrito}" />
     </p:column>
-
-    <p:column headerText="Color">
-        <h:outputText value="#{hospital.color}" />
+    <p:column headerText="Sede">
+        <h:outputText value="#{hospital.sede.descsede}" />
     </p:column>
+    <p:column headerText="Gerente">
+        <h:outputText value="#{hospital.gerente.descgerente}" />
+    </p:column>
+    <p:column headerText="Condicion">
+        <h:outputText value="#{hospital.condicion.descondicion}" />
+    </p:column>
+    <p:column headerText="Fecha">
+        <h:outputText value="#{hospital.fecharegistro}" />
+    </p:column>
+    <p:column headerText="Imagen">
+        <h:outputText value="#{hospital.imagen}" />
+    </p:column>
+   
 </p:dataTable>
 </h:body>
 <h:form><br/>
