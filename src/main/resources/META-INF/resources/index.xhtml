@@ -11,7 +11,7 @@
 <h:body>
    
 <!-- Tabla -->
-<p:dataTable var="hospital" value="#{hospitalViewController.hospitales}">
+<p:dataTable var="hospital" value="#{hospitalViewController.hospitales}"  rowKey="#{hospital.idhospital}" selectionMode="single">
     <p:column headerText="Id">
         <h:outputText value="#{hospital.idhospital}" />
     </p:column>
@@ -40,6 +40,12 @@
     <p:column headerText="Imagen">
         <h:outputText value="#{hospital.imagen}" />
     </p:column>
+    <p:column headerText="Acciones">
+
+        <p:commandButton  icon="pi pi-pencil" styleClass="rounded-button ui-button-warning" disableOnAjax="false" action="#{hospitalViewController.gotoCreateHospital}" />
+        <p:commandButton  icon="pi pi-trash" styleClass="rounded-button ui-button-danger" disableOnAjax="false" action="#{hospitalViewController.gotoCreateHospital}" />
+    </p:column>
+    
    
 </p:dataTable>
 </h:body>
@@ -47,8 +53,6 @@
 <p:commandLink id="nonAjax" action="#{hospitalViewController.gotoCreateHospital}" style="margin:20px;" ajax="false">
     <p:button  icon="pi pi-plus" value="Agregar" styleClass="ui-button-raised" />
 </p:commandLink>
-
-<p:button   icon="pi pi-pencil" value="Editar" styleClass="ui-button-raised ui-button-warning" />
 
 <br/></h:form>
 

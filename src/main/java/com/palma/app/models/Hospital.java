@@ -20,7 +20,7 @@ import lombok.Data;
 @Table(name = "HOSPITAL")
 
 @NamedStoredProcedureQueries({
-		@NamedStoredProcedureQuery(name = "addHospitalProcedure", procedureName = "ADD_HOSPITAL_PROCEDURE", resultClasses = {
+		@NamedStoredProcedureQuery(name = "addHospitalProcedure", procedureName = "PKG_HOSPITALES_CRUD.PROC_REGISTRAR_HOSPITAL", resultClasses = {
 				Hospital.class }, parameters = {
 						@StoredProcedureParameter(name = "nombre", type = String.class, mode = ParameterMode.IN),
 						@StoredProcedureParameter(name = "antiguedad", type = String.class, mode = ParameterMode.IN),
@@ -29,13 +29,13 @@ import lombok.Data;
 						@StoredProcedureParameter(name = "imagen", type = Integer.class, mode = ParameterMode.IN),
 						@StoredProcedureParameter(name = "detalles", type = Integer.class, mode = ParameterMode.IN)
 				}),
-		@NamedStoredProcedureQuery(name = "searchHospitalProcedure", procedureName = "SEARCH_HOSPITAL_PROCEDURE", resultClasses = {
+		@NamedStoredProcedureQuery(name = "searchHospitalProcedure", procedureName = "PROC_DATOS_HOSPITAL_ID", resultClasses = {
 				Hospital.class }, parameters = {
 						@StoredProcedureParameter(name = "nombre", type = String.class, mode = ParameterMode.IN),
 						@StoredProcedureParameter(name = "sede", type = String.class, mode = ParameterMode.IN),
 
 		}),
-		@NamedStoredProcedureQuery(name = "listarHospitalProcedure", procedureName = "LIST_HOSPITAL_PROCEDURE", resultClasses = {
+		@NamedStoredProcedureQuery(name = "listarHospitalProcedure", procedureName = "PKG_HOSPITALES_CRUD.PROC_DATOS_HOSPITAL", resultClasses = {
 				Hospital.class })
 })
 public class Hospital {

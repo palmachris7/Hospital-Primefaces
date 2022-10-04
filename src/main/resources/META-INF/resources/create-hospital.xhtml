@@ -1,50 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-xmlns:h="http://java.sun.com/jsf/html"
-xmlns:f="http://java.sun.com/jsf/core"
-xmlns:p="http://primefaces.org/ui">
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
 
 <h:head>
     <title>Crud Hospitales</title>
 </h:head>
 
 <h:body>
-    <h:form>
-        <h3>Agregar Nuevo Hospital</h3>
-        <div class="ui-fluid p-formgrid p-grid">
-            <div class="p-field p-col">
-                <p:outputLabel for="nombre" value="Nombre" />
-                <p:inputText value="#{hospitalViewController.hospital.nombre}" id="nombre" />
-            </div>
-            <div class="p-field p-col">
-                <p:outputLabel for="antiguedad" value="Antiguedad" />
-                <p:inputText value="#{hospitalViewController.hospital.antiguedad}" id="antiguedad" />
-            </div>
-            <div class="p-field p-col">
-                <p:outputLabel for="area" value="Area" />
-                <p:inputText value="#{hospitalViewController.hospital.area}" id="area" />
-            </div>
-            <div class="p-field p-col">
-                <p:outputLabel for="fecha" value="Fecha" />
-                <p:inputText value="#{hospitalViewController.hospital.fecharegistro}" id="fecha" />
-            </div>
-            <div class="p-field p-col">
-                <p:outputLabel for="imagen" value="Imagen" />
-                <p:inputText value="#{hospitalViewController.hospital.imagen}" id="imagen" />
-            </div>
-            <div class="p-field p-col">
-                <p:outputLabel for="detalles" value="Detalles" />
-                <p:inputText value="#{hospitalViewController.hospital.detalles}" id="detalles" />
-            </div>
-          <br></br>
-            <p:commandLink id="nonAjax" action="#{hospitalViewController.saveHospital}" ajax="false">
-                <p:button  icon="pi pi-save" value="Guardar" styleClass="ui-button-raised" />
-            </p:commandLink>
-        </div>
+    <div class="card">
+        <h:form id="form">
+            <h3>Agregar Nuevo Hospital</h3>
+            <div class="ui-fluid grid formgrid">
+                <div class="field col-9 md:col-4">
+                    <p:inputText  type="hidden" value="#{hospitalViewController.hospital.idhospital}" id="id" />
+                    <p:outputLabel for="nombre" value="Nombre" />
+                    <p:inputText value="#{hospitalViewController.hospital.nombre}" id="nombre" />
+                </div>
+                <div class="field col-9 md:col-4">
+                    <p:outputLabel for="antiguedad" value="Antiguedad" />
+                    <p:inputText value="#{hospitalViewController.hospital.antiguedad}" id="antiguedad" />
+                </div>
+                <div class="field col-9 md:col-4">
+                    <p:outputLabel for="area" value="Area" />
+                    <p:inputText value="#{hospitalViewController.hospital.area}" id="area" />
+                </div>
+                <div class="field col-9 md:col-4">
+                    <p:outputLabel for="imagen" value="Imagen" />
+                    <p:inputText value="#{hospitalViewController.hospital.imagen}" id="imagen" />
+                </div>
+                <div class="field col-9 md:col-4">
+                    <p:outputLabel for="@next" value="Sedes" />
+                    <p:selectOneMenu id="sede" value="#{hospitalViewController.sede}" effect="fold" editable="false">
+                        <f:selectItem itemLabel="Elige sede" itemValue="" />
+                        <f:selectItems value="#{hospitalViewController.sedes}" />
+                    </p:selectOneMenu>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <p:outputLabel for="@next" value="Condicion" />
+                    <p:selectOneMenu id="condicion" value="#{hospitalViewController.hospital.condicion}" effect="fold"
+                        editable="false">
+                        <f:selectItem itemLabel="Elige sede" itemValue="" />
+                        <f:selectItem itemLabel="Cerrado" itemValue="1" />
+                        <f:selectItem itemLabel="Abierto" itemValue="2" />
+                        <f:selectItem itemLabel="Limpieza" itemValue="3" />
+                    </p:selectOneMenu>
+                </div>
+                <div class="field col-9 md:col-4">
+                    <p:outputLabel for="detalles" value="Detalles" />
+                    <p:inputText value="#{hospitalViewController.hospital.detalles}" id="detalles" />
+                </div>
+                <div class="field col-9 md:col-4">
+                    <p:outputLabel for="basic" value="Fecha de Registro" />
+                    <p:datePicker id="basic" value="#{hospitalViewController.hospital.fecharegistro}"
+                        showButtonBar="true" />
+                </div>
+                <br></br>
+                <div class="field col-9 md:col-4">
+                    <p:commandLink id="nonAjax" action="#{hospitalViewController.saveHospital}" ajax="false">
+                        <p:button icon="pi pi-save" value="Guardar" styleClass="ui-button-raised" />
+                    </p:commandLink>
+                </div>
+                <br></br>
+                <div class="field col-9 md:col-4">
+                <p:commandLink id="regresar" action="#{hospitalViewController.regresar}" ajax="false">
+                    <p:button icon="pi pi-arrow-left" value="Regresar"
+                        styleClass="ui-button-raised ui-button-warning" />
+                </p:commandLink>
+                </div>
+    </div>
+
     </h:form>
+    </div>
 </h:body>
 
 </html>
-
-
