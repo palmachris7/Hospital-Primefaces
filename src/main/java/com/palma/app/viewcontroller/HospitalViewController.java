@@ -43,8 +43,8 @@ public class HospitalViewController {
     @PostConstruct 
     public void init() {
         hospital = new Hospital();
-        //hospitales = hospitalRepository.listarHospitalpro();
-      hospitales = hospitalRepository.findAll();
+       //hospitales = hospitalRepository.listarHospitalpro();
+     hospitales = hospitalRepository.findAll();
         sedes = sedeRepository.findAll();
     }
 
@@ -56,6 +56,7 @@ public class HospitalViewController {
         hospitales = hospitalRepository.findAll();
         return "index.xhtml?faces-redirect=true";
     }
+
     public String editar(Long idHospital, Model model) {
         Optional<Hospital> optional = hospitalRepository.findById(idHospital);
         Hospital hospital = optional.get();
@@ -67,6 +68,12 @@ public class HospitalViewController {
 
     public String saveHospital() {
         hospitalRepository.save(hospital);
+        hospitales = hospitalRepository.findAll();
+        return "index.xhtml?faces-redirect=true";
+    }
+
+    public String eliminar(Long idHospital) {
+        hospitalRepository.deleteHospital(idHospital);
         hospitales = hospitalRepository.findAll();
         return "index.xhtml?faces-redirect=true";
     }
