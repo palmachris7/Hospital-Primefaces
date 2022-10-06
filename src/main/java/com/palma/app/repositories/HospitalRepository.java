@@ -1,5 +1,6 @@
 package com.palma.app.repositories;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +15,19 @@ import com.palma.app.models.Hospital;
 @Repository
 public interface HospitalRepository extends JpaRepository<Hospital, Long> {
     @Procedure(name = "addHospital")
-    String procedureName(@Param("nombre") String nombre, @Param("antiguedad") String antiguedad);
+    String listHospital( @Param("pidhospital") Integer idhospital,
+    @Param("pantiguedad") Integer antiguedad, @Param("parea") Double area, @Param("pfecharegistro") Date fecha,
+    @Param("pnombre") String nombre, @Param("pidecondicion") Integer idCondicion, @Param("piddistrito") Integer idDistrito,
+    @Param("pidgerente") Integer idGerente, @Param("pidsede") Integer idSede, @Param("pimagen") String imagen,
+    @Param("pdetalles") String detalles);
+
+    @Procedure(name = "updateHospital")
+    String updateHospital(
+            @Param("pidhospital") Integer idhospital,
+            @Param("pantiguedad") Integer antiguedad, @Param("parea") Double area, @Param("pfecharegistro") Date fecha,
+            @Param("pnombre") String nombre, @Param("pidecondicion") Integer idCondicion, @Param("piddistrito") Integer idDistrito,
+            @Param("pidgerente") Integer idGerente, @Param("pidsede") Integer idSede, @Param("pimagen") String imagen,
+            @Param("pdetalles") String detalles);
 
     @Procedure(name = "searchHospital")
     Optional<Hospital> searchHospital(@Param("nombre") String nombre, @Param("sede") Integer sede);
@@ -25,9 +38,4 @@ public interface HospitalRepository extends JpaRepository<Hospital, Long> {
     @Procedure(name = "deleteHospital")
     String deleteHospital(@Param("idhospital") Long idhospital);
 
-    @Procedure(name = "updateHospital")
-    Optional<Hospital> updateHospital(@Param("hospital") Integer idhospital);
-
-
-    
 }

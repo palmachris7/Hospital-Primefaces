@@ -22,8 +22,8 @@ import lombok.Data;
 @NamedStoredProcedureQueries({
 		@NamedStoredProcedureQuery(name = "addHospitalProcedure", procedureName = "PKG_HOSPITALES_CRUD.PROC_REGISTRAR_HOSPITAL", parameters = {
 			    @StoredProcedureParameter(name = "pidhospital", type = Integer.class, mode = ParameterMode.IN),
-				@StoredProcedureParameter(name = "pantiguedad", type = String.class, mode = ParameterMode.IN),
-				@StoredProcedureParameter(name = "parea", type = String.class, mode = ParameterMode.IN),
+				@StoredProcedureParameter(name = "pantiguedad", type = Integer.class, mode = ParameterMode.IN),
+				@StoredProcedureParameter(name = "parea", type = Double.class, mode = ParameterMode.IN),
 				@StoredProcedureParameter(name = "pfecharegistro", type = Date.class, mode = ParameterMode.IN),
 				@StoredProcedureParameter(name = "pnombre", type = String.class, mode = ParameterMode.IN),
 				@StoredProcedureParameter(name = "pidecondicion", type = Integer.class, mode = ParameterMode.IN),
@@ -35,8 +35,8 @@ import lombok.Data;
 		}),
 		@NamedStoredProcedureQuery(name = "editHospitalProcedure", procedureName = "PKG_HOSPITALES_CRUD.PROC_EDITAR_HOSPITAL", parameters = {
 			@StoredProcedureParameter(name = "pidhospital", type = Integer.class, mode = ParameterMode.IN),
-			@StoredProcedureParameter(name = "pantiguedad", type = String.class, mode = ParameterMode.IN),
-			@StoredProcedureParameter(name = "parea", type = String.class, mode = ParameterMode.IN),
+			@StoredProcedureParameter(name = "pantiguedad", type = Integer.class, mode = ParameterMode.IN),
+			@StoredProcedureParameter(name = "parea", type = Double.class, mode = ParameterMode.IN),
 			@StoredProcedureParameter(name = "pfecharegistro", type = Date.class, mode = ParameterMode.IN),
 			@StoredProcedureParameter(name = "pnombre", type = String.class, mode = ParameterMode.IN),
 			@StoredProcedureParameter(name = "pidecondicion", type = Integer.class, mode = ParameterMode.IN),
