@@ -46,8 +46,8 @@ public class HospitalViewController {
     @PostConstruct 
     public void init() {
         hospital = new Hospital();
-       //hospitales = hospitalRepository.listarHospitalpro();
-     hospitales = hospitalRepository.findAll();
+       hospitales = hospitalRepository.listarHospitalpro();
+     //hospitales = hospitalRepository.findAll();
         sedes = sedeRepository.findAll();
     }
 

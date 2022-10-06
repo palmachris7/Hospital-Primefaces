@@ -18,7 +18,6 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "HOSPITAL")
-
 @NamedStoredProcedureQueries({
 		@NamedStoredProcedureQuery(name = "addHospitalProcedure", procedureName = "PKG_HOSPITALES_CRUD.PROC_REGISTRAR_HOSPITAL", parameters = {
 			    @StoredProcedureParameter(name = "pidhospital", type = Integer.class, mode = ParameterMode.IN),
