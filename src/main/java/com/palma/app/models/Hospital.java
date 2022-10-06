@@ -48,7 +48,7 @@ import lombok.Data;
 	}),
 		@NamedStoredProcedureQuery(name = "searchHospital", procedureName = "PKG_HOSPITALES_CRUD.PROC_BUSCAR_HOSPITAL", resultClasses = Hospital.class, parameters = {
 				@StoredProcedureParameter(name = "nombre", type = String.class, mode = ParameterMode.IN),
-				@StoredProcedureParameter(name = "sede", type = String.class, mode = ParameterMode.IN),
+				@StoredProcedureParameter(name = "sede", type = Integer.class, mode = ParameterMode.IN),
 				@StoredProcedureParameter(mode = ParameterMode.REF_CURSOR, name = "cur_list_hospitales_b", type = Void.class)
 
 		}),

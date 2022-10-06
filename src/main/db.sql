@@ -1,253 +1,198 @@
-CREATE OR REPLACE PACKAGE pkg_hospitales_crud AS
-/*==============================================================*/
-/* SISTEMA:     CRUD Hospitales             					*/
-/* PAQUETE:     PKG_HOSPITALES_CRUD.sql     	                */
-/* DESCRIPCION: Crud para HOSPITALES       			            */
-/* AUTOR:       PALMACHRIS7							            */
-/* FECHA:       02/10/2022                                      */
-/*==============================================================*/
-/*-------------------------------------------------------------------------------- 
-
-	PROCEDIMIENTOS:
-	--------------------------------------------------------------------------------
-    INSERT	
-	PROC_REGISTRAR_HOSPITAL[REGISTROS]
-	--------------------------------------------------------------------------------
-    UPDATE
-    PROC_ACTUALIZAR_HOSPITAL[REGISTROS]
-    --------------------------------------------------------------------------------
-    Statement  DELETE
-	PROC_ELIMINAR_HOSPITAL[Key]
-	--------------------------------------------------------------------------------*/
-/*==============================================================*/
-
-    PROCEDURE proc_registrar_hospital (
-        pidhospital    IN NUMBER,
-        pantiguedad    IN NUMBER,
-        parea          IN FLOAT,
-        pfecharegistro IN TIMESTAMP,
-        pnombre        IN VARCHAR2,
-        pidecondicion  IN NUMBER,
-        piddistrito    IN NUMBER,
-        pidgerente     IN NUMBER,
-        pidsede        IN NUMBER,
-        pimagen        IN VARCHAR2,
-        pdetalles      IN VARCHAR2
-    );
-
-    PROCEDURE proc_actualizar_hospital (
-        pidhospital    IN NUMBER,
-        pantiguedad    IN NUMBER,
-        parea          IN FLOAT,
-        pfecharegistro IN TIMESTAMP,
-        pnombre        IN VARCHAR2,
-        pidecondicion  IN NUMBER,
-        piddistrito    IN NUMBER,
-        pidgerente     IN NUMBER,
-        pidsede        IN NUMBER,
-        pimagen        IN VARCHAR2,
-        pdetalles      IN VARCHAR2
-    );
-
-    PROCEDURE proc_eliminar_hospital (
-        pidhospital IN NUMBER
-    );
-
-    PROCEDURE proc_buscar_hospital (
-        pnombre             IN VARCHAR2,
-        pidsede             IN NUMBER,
-        cur_list_hospitales_b OUT SYS_REFCURSOR
-    );
-
-    PROCEDURE proc_listar_hospital (
-        cur_list_hospitales OUT SYS_REFCURSOR
-    );
-
-    PROCEDURE proc_listar_hospital_id (
-        pidhospital            IN NUMBER,
-        cur_list_hospitales_id OUT SYS_REFCURSOR
-    );
-
-END pkg_hospitales_crud;
+create table PROVINCIA
+(
+    IDPROVINCIA   NUMBER(10) not null
+        primary key,
+    DESCPROVINCIA VARCHAR2(255 char),
+    FECHAREGISTRO TIMESTAMP(6)
+)
+/
+create table SEDE
+(
+    IDSEDE        NUMBER(10) not null
+        primary key,
+    DESCSEDE      VARCHAR2(255 char),
+    FECHAREGISTRO TIMESTAMP(6)
+)
 /
 
-CREATE OR REPLACE PACKAGE BODY pkg_hospitales_crud AS 
-/*==============================================================*/
-/* SISTEMA:     CRUD Hospitales             					*/
-/* PAQUETE:     PKG_HOSPITALES_CRUD.sql     	                */
-/* DESCRIPCION: Crud para HOSPITALES       			            */
-/* AUTOR:       PALMACHRIS7							            */
-/* FECHA:       02/10/2022                                      */
-/*==============================================================*/
-  -----------------------------------------------------------------------------
-    -- INSERT	
-	-- PROC_REGISTRAR_HOSPITAL[REGISTROS]
-  -----------------------------------------------------------------------------
-    PROCEDURE proc_registrar_hospital( 
-        pidhospital    IN NUMBER,
-        pantiguedad    IN NUMBER,
-        parea          IN FLOAT,
-        pfecharegistro IN TIMESTAMP,
-        pnombre        IN VARCHAR2,
-        pidecondicion  IN NUMBER,
-        piddistrito    IN NUMBER,
-        pidgerente     IN NUMBER,
-        pidsede        IN NUMBER,
-        pimagen        IN VARCHAR2,
-        pdetalles      IN VARCHAR2
-    ) IS
-    BEGIN
-        INSERT INTO hospital (
-            idhospital,
-            antiguedad,
-            area,
-            fecharegistro,
-            nombre,
-            idecondicion,
-            iddistrito,
-            idgerente,
-            idsede,
-            imagen,
-            detalles
-        ) VALUES (
-            pidhospital,
-            pantiguedad,
-            parea,
-            pfecharegistro,
-            pnombre,
-            pidecondicion,
-            piddistrito,
-            pidgerente,
-            pidsede,
-            pimagen,
-            pdetalles
-        );
 
-    END proc_registrar_hospital;
-  -----------------------------------------------------------------------------
-    -- UPDATE
-    -- PROC_ACTUALIZAR_HOSPITAL[REGISTROS]
-  -----------------------------------------------------------------------------
-    PROCEDURE proc_actualizar_hospital (
-        pidhospital    IN NUMBER,
-        pantiguedad    IN NUMBER,
-        parea          IN FLOAT,
-        pfecharegistro IN TIMESTAMP,
-        pnombre        IN VARCHAR2,
-        pidecondicion  IN NUMBER,
-        piddistrito    IN NUMBER,
-        pidgerente     IN NUMBER,
-        pidsede        IN NUMBER,
-        pimagen        IN VARCHAR2,
-        pdetalles      IN VARCHAR2
-    ) IS
-    BEGIN
-        UPDATE hospital
-        SET
-            idhospital = pidhospital,
-            antiguedad = pantiguedad,
-            area = parea,
-            fecharegistro = pfecharegistro,
-            nombre = pnombre,
-            idecondicion = pidecondicion,
-            iddistrito = piddistrito,
-            idgerente = pidgerente,
-            idsede = pidsede,
-            imagen = pimagen,
-            detalles = pdetalles
-        WHERE
-            idhospital = pidhospital;
+create table CONDICION
+(
+    IDCONDICION   NUMBER(10) not null
+        primary key,
+    DESCONDICION  VARCHAR2(255 char),
+    FECHAREGISTRO TIMESTAMP(6)
+)
+/
 
-    END proc_actualizar_hospital;
+create table DISTRITO
+(
+    IDDISTRITO    NUMBER(10) not null
+        primary key,
+    DESCDISTRITO  VARCHAR2(255 char),
+    FECHAREGISTRO TIMESTAMP(6),
+    ID_PROVINCIA  NUMBER(10)
+        constraint FK65EKCV7CLQNDJH7KEJBC7PF1U
+            references PROVINCIA
+)
+/
 
-  -----------------------------------------------------------------------------
-    --DELETE
-	--PROC_ELIMINAR_HOSPITAL[Key]
-  -----------------------------------------------------------------------------
-    PROCEDURE proc_eliminar_hospital (
-        pidhospital IN NUMBER
-    ) IS
-    BEGIN
-        DELETE hospital
-        WHERE
-            idhospital = pidhospital;
 
-    END proc_eliminar_hospital;
-    
--------------------------------------------------------------------------------
-    --Buscar
-  --   PROC_BUSCAR_HOSPITAL[key]
--------------------------------------------------------------------------------
-    PROCEDURE proc_buscar_hospital (
-        pnombre             IN VARCHAR2,
-        pidsede             IN NUMBER,
-        cur_list_hospitales_b OUT SYS_REFCURSOR
-    ) IS
-    BEGIN
-        OPEN cur_list_hospitales_b FOR 
-                         SELECT
-                             *
-                            FROM
-                            hospital
-                            WHERE
-                            nombre = pnombre or idsede=pidsede;
 
-    END proc_buscar_hospital;
+create table GERENTE
+(
+    IDGERENTE     NUMBER(10) not null
+        primary key,
+    DESCGERENTE   VARCHAR2(255 char),
+    FECHAREGISTRO TIMESTAMP(6)
+)
+/
 
--------------------------------------------------------------------------------
-    --Listar
-  --   PROC_LISTAR_HOSPITAL_ID[key]
--------------------------------------------------------------------------------
-    PROCEDURE proc_listar_hospital_id (
-        pidhospital            IN NUMBER,
-        cur_list_hospitales_id OUT SYS_REFCURSOR
-    ) IS
-    BEGIN
-        OPEN cur_list_hospitales_id FOR 
-    SELECT
-     "A1"."IDHOSPITAL"    "IDHOSPITAL",
-    "A1"."ANTIGUEDAD"    "ANTIGUEDAD",
-    "A1"."AREA"          "AREA",
-    "A1"."FECHAREGISTRO" "FECHAREGISTRO",
-    "A1"."NOMBRE"        "NOMBRE",
-    "A1"."IDECONDICION"  "IDECONDICION",
-    "A1"."IDDISTRITO"    "IDDISTRITO",
-    "A1"."IDGERENTE"     "IDGERENTE",
-    "A1"."IDSEDE"        "IDSEDE",
-    "A1"."IMAGEN"        "IMAGEN",
-    "A1"."DETALLES"      "DETALLES"
-    
-    FROM
-        "SYS"."HOSPITAL" "A1"
-    WHERE
-       idhospital = pidhospital;
+create table PERFIL
+(
+    IDPERFIL NUMBER(10) not null
+        primary key,
+    PERFIL   VARCHAR2(255 char)
+)
+/
 
-    END proc_listar_hospital_id;
 
--------------------------------------------------------------------------------
-    --Listar
-  --   PROC_LISTAR_HOSPITAL[key]
--------------------------------------------------------------------------------
-    PROCEDURE proc_listar_hospital (
-        cur_list_hospitales OUT SYS_REFCURSOR
-    ) IS
-    BEGIN
-        OPEN cur_list_hospitales FOR 
-    SELECT
-    "A1"."IDHOSPITAL"    "IDHOSPITAL",
-    "A1"."ANTIGUEDAD"    "ANTIGUEDAD",
-    "A1"."AREA"          "AREA",
-    "A1"."FECHAREGISTRO" "FECHAREGISTRO",
-    "A1"."NOMBRE"        "NOMBRE",
-    "A1"."IDECONDICION"  "IDECONDICION",
-    "A1"."IDDISTRITO"    "IDDISTRITO",
-    "A1"."IDGERENTE"     "IDGERENTE",
-    "A1"."IDSEDE"        "IDSEDE",
-    "A1"."IMAGEN"        "IMAGEN",
-    "A1"."DETALLES"      "DETALLES"
-FROM
-    "SYS"."HOSPITAL" "A1";
+create table USUARIO
+(
+    IDUSUARIO     NUMBER(10) not null
+        primary key,
+    ESTATUS       NUMBER(10),
+    PASSWORD      VARCHAR2(255 char),
+    USERNAME      VARCHAR2(255 char),
+    EMAIL         VARCHAR2(255 char),
+    FECHAREGISTRO TIMESTAMP(6),
+    NOMBRE        VARCHAR2(255 char)
+)
+/
 
-    END proc_listar_hospital;
+create table USUARIO_PERFIL
+(
+    IDUSUARIO NUMBER(10) not null
+        constraint FKFHD0AMIL8CPDGY5E3S3CN22PB
+            references USUARIO,
+    IDPERFIL  NUMBER(10) not null
+        constraint FK4KVNRQPUUR4GACPBV0YM67WEY
+            references PERFIL
+)
+/
 
-END pkg_hospitales_crud;
+
+
+create table HOSPITAL
+(
+    IDHOSPITAL    NUMBER(10) not null
+        primary key,
+    ANTIGUEDAD    NUMBER(10),
+    AREA          FLOAT,
+    FECHAREGISTRO TIMESTAMP(6),
+    NOMBRE        VARCHAR2(255 char),
+    IDECONDICION  NUMBER(10)
+        constraint FK5DBJ6Q1BGQFK0KKA3FNJPLG2N
+            references CONDICION,
+    IDDISTRITO    NUMBER(10)
+        constraint FKQP6UP85P1Q8X9MO2CKH52HGH8
+            references DISTRITO,
+    IDGERENTE     NUMBER(10)
+        constraint FK29LHPY6LMQLQYPRIWPRGQOPH
+            references GERENTE,
+    IDSEDE        NUMBER(10)
+        constraint FKH1VICIHFSABT7FGQV3T3YFJQQ
+            references SEDE,
+    IMAGEN        VARCHAR2(255 char),
+    DETALLES      VARCHAR2(255 char)
+)
+/
+
+
+
+
+create table CITA
+(
+    IDCITA        NUMBER(10) not null
+        primary key,
+    DESCITA       VARCHAR2(255 char),
+    ESPECIALIDAD  VARCHAR2(255 char),
+    ESTADO        NUMBER(10),
+    FECHAREGISTRO TIMESTAMP(6),
+    ID_HOSPITAL   NUMBER(10)
+        constraint FK64C5QTDNQPV2V583HTKD38CQ4
+            references HOSPITAL,
+    IDEUSUARIO    NUMBER(10)
+        constraint FKQHTRCMKDQ2X9HSF789AC5YM18
+            references USUARIO
+)
+/
+
+
+
+INSERT INTO SYS.PROVINCIA (IDPROVINCIA, DESCPROVINCIA, FECHAREGISTRO) VALUES (1, 'Lima', TO_TIMESTAMP('2022-09-18 00:09:07.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
+INSERT INTO SYS.PROVINCIA (IDPROVINCIA, DESCPROVINCIA, FECHAREGISTRO) VALUES (2, 'Callao', TO_TIMESTAMP('2022-09-18 00:17:29.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
+INSERT INTO SYS.PROVINCIA (IDPROVINCIA, DESCPROVINCIA, FECHAREGISTRO) VALUES (3, 'Ica', TO_TIMESTAMP('2022-09-21 01:52:28.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
+
+
+INSERT INTO SYS.SEDE (IDSEDE, DESCSEDE, FECHAREGISTRO) VALUES (1, 'Lima-I', TO_TIMESTAMP('2022-09-18 00:05:33.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
+INSERT INTO SYS.SEDE (IDSEDE, DESCSEDE, FECHAREGISTRO) VALUES (2, 'Lima-II', TO_TIMESTAMP('2022-09-18 00:17:49.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
+INSERT INTO SYS.SEDE (IDSEDE, DESCSEDE, FECHAREGISTRO) VALUES (3, 'Sub-Sede I', TO_TIMESTAMP('2022-09-18 00:18:10.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
+INSERT INTO SYS.SEDE (IDSEDE, DESCSEDE, FECHAREGISTRO) VALUES (4, 'Ica-I', TO_TIMESTAMP('2022-09-21 01:57:46.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
+
+
+INSERT INTO SYS.CONDICION (IDCONDICION, DESCONDICION, FECHAREGISTRO) VALUES (1, 'Funcionando', TO_TIMESTAMP('2022-09-18 00:11:34.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
+INSERT INTO SYS.CONDICION (IDCONDICION, DESCONDICION, FECHAREGISTRO) VALUES (2, 'Cerrado', TO_TIMESTAMP('2022-09-18 00:14:35.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
+INSERT INTO SYS.CONDICION (IDCONDICION, DESCONDICION, FECHAREGISTRO) VALUES (3, 'En limpieza', TO_TIMESTAMP('2022-09-18 00:15:03.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
+
+
+
+INSERT INTO SYS.DISTRITO (IDDISTRITO, DESCDISTRITO, FECHAREGISTRO, ID_PROVINCIA) VALUES (1, 'Ate Vitarte', TO_TIMESTAMP('2022-09-18 00:10:22.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'), 1);
+INSERT INTO SYS.DISTRITO (IDDISTRITO, DESCDISTRITO, FECHAREGISTRO, ID_PROVINCIA) VALUES (2, 'Lince', TO_TIMESTAMP('2022-09-18 00:15:12.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'), 1);
+INSERT INTO SYS.DISTRITO (IDDISTRITO, DESCDISTRITO, FECHAREGISTRO, ID_PROVINCIA) VALUES (3, 'Barranco', TO_TIMESTAMP('2022-09-18 00:15:37.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'), 1);
+INSERT INTO SYS.DISTRITO (IDDISTRITO, DESCDISTRITO, FECHAREGISTRO, ID_PROVINCIA) VALUES (4, 'Breña', TO_TIMESTAMP('2022-09-21 01:51:14.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'), 1);
+INSERT INTO SYS.DISTRITO (IDDISTRITO, DESCDISTRITO, FECHAREGISTRO, ID_PROVINCIA) VALUES (5, 'Ica', TO_TIMESTAMP('2022-09-21 01:53:07.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'), 3);
+
+
+INSERT INTO SYS.GERENTE (IDGERENTE, DESCGERENTE, FECHAREGISTRO) VALUES (1, 'Juan Gomez', TO_TIMESTAMP('2022-09-18 00:10:03.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
+INSERT INTO SYS.GERENTE (IDGERENTE, DESCGERENTE, FECHAREGISTRO) VALUES (2, 'Pedro Perez', TO_TIMESTAMP('2022-09-18 00:16:21.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
+INSERT INTO SYS.GERENTE (IDGERENTE, DESCGERENTE, FECHAREGISTRO) VALUES (3, 'Luis Gonzalez', TO_TIMESTAMP('2022-09-18 00:16:34.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
+INSERT INTO SYS.GERENTE (IDGERENTE, DESCGERENTE, FECHAREGISTRO) VALUES (4, 'Christian Palma', TO_TIMESTAMP('2022-09-21 01:53:49.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
+
+
+INSERT INTO SYS.PERFIL (IDPERFIL, PERFIL) VALUES (1, 'ADMINISTRADOR');
+INSERT INTO SYS.PERFIL (IDPERFIL, PERFIL) VALUES (2, 'USUARIO');
+
+INSERT INTO SYS.USUARIO (IDUSUARIO, ESTATUS, PASSWORD, USERNAME, EMAIL, NOMBRE, FECHAREGISTRO) VALUES (21, 1, '$2a$10$2t0V50GlNCr3rqmTtVZo/O9Z61u0YNjpvavaB42AZSIPU4Zx58Q62', 'user', 'palmachristopher7@hotmail.com', 'Christopher Palma', TO_TIMESTAMP('2022-09-19 22:39:11.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
+INSERT INTO SYS.USUARIO (IDUSUARIO, ESTATUS, PASSWORD, USERNAME, EMAIL, NOMBRE, FECHAREGISTRO) VALUES (41, 1, '$2a$10$15Ba7W031vm/Iwq3J.As4ObsYusXkj6PLEKKwRg4S9BZK7I/JouJ2', 'admin', 'palmachristopher7@gmail.com', 'Arnie Talaverano', TO_TIMESTAMP('2022-09-18 22:39:13.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
+INSERT INTO SYS.USUARIO (IDUSUARIO, ESTATUS, PASSWORD, USERNAME, EMAIL, NOMBRE, FECHAREGISTRO) VALUES (78, 1, '$2a$10$Fo4.UQX2vr0FWr6zklSvCu31RHAie1KH2/CJ8vl9SYwflW1Hyt.TS', 'prueba', 'prueba@hotmail.com', 'prueba', TO_TIMESTAMP('2022-09-21 00:33:09.893000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
+
+INSERT INTO SYS.USUARIO_PERFIL (IDUSUARIO, IDPERFIL) VALUES (21, 2);
+INSERT INTO SYS.USUARIO_PERFIL (IDUSUARIO, IDPERFIL) VALUES (41, 1);
+INSERT INTO SYS.USUARIO_PERFIL (IDUSUARIO, IDPERFIL) VALUES (78, 2);
+
+INSERT INTO SYS.HOSPITAL (IDHOSPITAL, ANTIGUEDAD, AREA, FECHAREGISTRO, NOMBRE, IDECONDICION, IDDISTRITO, IDGERENTE, IDSEDE, IMAGEN, DETALLES) VALUES (1, 10, 420, TO_TIMESTAMP('2022-09-18 00:00:00.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'), 'Hospital  de Lima Este', 1, 1, 1, 1, 'hospital1.jpeg', 'Somos un Hospital de referencia nacional, que brinda atención altamente especializada a la salud en                        general y diversas especialidades; siempre con la mejor calidad y seguridad para la población en general');
+INSERT INTO SYS.HOSPITAL (IDHOSPITAL, ANTIGUEDAD, AREA, FECHAREGISTRO, NOMBRE, IDECONDICION, IDDISTRITO, IDGERENTE, IDSEDE, IMAGEN, DETALLES) VALUES (2, 5, 200, TO_TIMESTAMP('2022-09-18 00:00:00.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'), 'Hospital de Barranco', 2, 3, 3, 2, 'no-image.jpeg', 'Hospital situada en la ciudad de barranco, con diversas especialidades y abierto las 24 horas del dia.');
+INSERT INTO SYS.HOSPITAL (IDHOSPITAL, ANTIGUEDAD, AREA, FECHAREGISTRO, NOMBRE, IDECONDICION, IDDISTRITO, IDGERENTE, IDSEDE, IMAGEN, DETALLES) VALUES (3, 2, 500, TO_TIMESTAMP('2022-09-18 00:19:45.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'), 'Hospital Sede Lince', 3, 2, 2, 3, 'no-image.jpeg', 'Hospital de lima centro que presta sus funcionalidaddes durantes las 24 horas del día.');
+INSERT INTO SYS.HOSPITAL (IDHOSPITAL, ANTIGUEDAD, AREA, FECHAREGISTRO, NOMBRE, IDECONDICION, IDDISTRITO, IDGERENTE, IDSEDE, IMAGEN, DETALLES) VALUES (4, 50, 4000, TO_TIMESTAMP('2022-03-08 00:00:00.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'), 'Hospital Lima Centro', 2, 2, 3, 1, 'no-image.jpeg', 'Es un centro hospitalario público peruano, situado en Lima y administrado por el Ministerio de Salud del Perú, encargado de la atención especializada, prevención y disminución de riesgos relacionados con la salud.');
+INSERT INTO SYS.HOSPITAL (IDHOSPITAL, ANTIGUEDAD, AREA, FECHAREGISTRO, NOMBRE, IDECONDICION, IDDISTRITO, IDGERENTE, IDSEDE, IMAGEN, DETALLES) VALUES (5, 23, 5400, TO_TIMESTAMP('2022-09-13 00:00:00.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'), 'Hospital Breña', 3, 4, 2, 1, 'no-image.jpeg', 'Hospital en pleno funcionamiento');
+INSERT INTO SYS.HOSPITAL (IDHOSPITAL, ANTIGUEDAD, AREA, FECHAREGISTRO, NOMBRE, IDECONDICION, IDDISTRITO, IDGERENTE, IDSEDE, IMAGEN, DETALLES) VALUES (6, 20, 100, TO_TIMESTAMP('2022-09-05 00:00:00.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'), 'Hospital Ica', 2, 5, 4, 4, 'no-image.jpeg', 'Hospital de la ciudad de Ica');
+
+INSERT INTO SYS.CITA (IDCITA, DESCITA, ESPECIALIDAD, ESTADO, FECHAREGISTRO, ID_HOSPITAL, IDEUSUARIO) VALUES (1, 'Pediatria - Tarde Vitarte', 'Pediatria', 3, TO_TIMESTAMP('2022-09-18 00:00:00.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'), 1, 21);
+INSERT INTO SYS.CITA (IDCITA, DESCITA, ESPECIALIDAD, ESTADO, FECHAREGISTRO, ID_HOSPITAL, IDEUSUARIO) VALUES (2, 'Cita Odontologica', 'Odontologia', 1, TO_TIMESTAMP('2022-09-16 00:00:00.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'), 1, 41);
+INSERT INTO SYS.CITA (IDCITA, DESCITA, ESPECIALIDAD, ESTADO, FECHAREGISTRO, ID_HOSPITAL, IDEUSUARIO) VALUES (3, 'Cita Oftalmologica', 'Oftalmologia', 1, TO_TIMESTAMP('2022-09-15 00:00:00.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'), 2, 41);
+INSERT INTO SYS.CITA (IDCITA, DESCITA, ESPECIALIDAD, ESTADO, FECHAREGISTRO, ID_HOSPITAL, IDEUSUARIO) VALUES (4, 'Cita Cirugia Tarde', 'Cirugia', 2, TO_TIMESTAMP('2022-09-17 00:00:00.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'), 3, 41);
+
+
+
+
+/*drop table CONDICION cascade constraints;
+drop table SEDE cascade constraints;
+drop table DISTRITO cascade constraints;
+drop table GERENTE cascade constraints;
+drop table USUARIO cascade constraints;
+drop table PROVINCIA cascade constraints;
+drop table PERFIL cascade constraints;
+drop table USUARIO_PERFIL cascade constraints;
+drop table HOSPITAL cascade constraints;
+drop table CITA cascade constraints;*/

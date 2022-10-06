@@ -9,6 +9,9 @@ import com.palma.app.models.Sede;
 import com.palma.app.repositories.HospitalRepository;
 import com.palma.app.repositories.SedeRepository;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -77,4 +80,12 @@ public class HospitalViewController {
         hospitales = hospitalRepository.findAll();
         return "index.xhtml?faces-redirect=true";
     }
+    @RequestMapping(value="obtieneTitulo", params="idDisco")
+	public @ModelAttribute("tituloDisco") Hospital obtieneTituloDisco(@ModelAttribute String nombre,@ModelAttribute Integer sede) {
+		Optional<Hospital> optional=hospitalRepository.searchHospital(nombre,sede);
+		if (optional.isPresent()) {
+			return optional.get();
+		}
+		return null;
+	}
 }

@@ -17,7 +17,7 @@ public interface HospitalRepository extends JpaRepository<Hospital, Long> {
     String procedureName(@Param("nombre") String nombre, @Param("antiguedad") String antiguedad);
 
     @Procedure(name = "searchHospital")
-    Optional<Hospital> searchHospital(@Param("nombre") String nombre, @Param("sede") String sede);
+    Optional<Hospital> searchHospital(@Param("nombre") String nombre, @Param("sede") Integer sede);
 
     @Procedure(name = "listarHospital")
     List<Hospital> listarHospitalpro();
