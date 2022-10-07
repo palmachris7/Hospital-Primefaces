@@ -1,4 +1,4 @@
-package com.palma.app.viewcontroller;
+package com.palma.app.controller;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.palma.app.models.Hospital;
 import com.palma.app.models.Sede;
-import com.palma.app.repositories.HospitalRepository;
+import com.palma.app.repositories.HospitalRepo;
 import com.palma.app.repositories.SedeRepository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @Data
 public class HospitalViewController {
 
-    private HospitalRepository hospitalRepository;
+    private HospitalRepo hospitalRepository;
     private SedeRepository sedeRepository;
     private List<Hospital> hospitales;
     private Hospital hospital;
@@ -33,7 +33,7 @@ public class HospitalViewController {
 
 
     @Autowired
-    public void setHospitalRepository(HospitalRepository hospitalRepository) {
+    public void setHospitalRepository(HospitalRepo hospitalRepository) {
         this.hospitalRepository = hospitalRepository;
     }
 
@@ -46,7 +46,7 @@ public class HospitalViewController {
     @PostConstruct 
     public void init() {
         hospital = new Hospital();
-       hospitales = hospitalRepository.listarHospitalpro();
+       hospitales = hospitalRepository.buscarTodos();
      //hospitales = hospitalRepository.findAll();
         sedes = sedeRepository.findAll();
     }
@@ -56,20 +56,20 @@ public class HospitalViewController {
     }
 
     public String regresar() {
-        hospitales = hospitalRepository.findAll();
+        hospitales = hospitalRepository.buscarTodos();
         return "index.xhtml?faces-redirect=true";
     }
 
     public String editar(Long idHospital, Model model) {
-        Optional<Hospital> optional = hospitalRepository.findById(idHospital);
-        Hospital hospital = optional.get();
+       //Optional<Hospital> optional = hospitalRepository.findById(idHospital);
+        //Hospital hospital = optional.get();
         model.addAttribute("hospital", hospital);
 
         // hospital = hospitalRepository.findById(valor);
         return "create-hospital.xhtml?faces-redirect=true";
     }
 
-    public String saveHospital() {
+    public String saveHospital(Hospital hospital) {
         hospitalRepository.save(hospital);
         hospitales = hospitalRepository.findAll();
         return "index.xhtml?faces-redirect=true";

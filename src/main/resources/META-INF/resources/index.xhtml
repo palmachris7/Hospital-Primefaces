@@ -42,8 +42,8 @@
     </p:column>
     <p:column headerText="Acciones">
 
-        <p:commandButton  icon="pi pi-pencil" styleClass="rounded-button ui-button-warning" disableOnAjax="false" action="#{hospitalViewController.gotoCreateHospital}" />
-        <p:commandButton  icon="pi pi-trash" styleClass="rounded-button ui-button-danger" disableOnAjax="false" action="#{hospitalViewController.eliminar}" />
+        <p:commandButton  icon="pi pi-pencil" styleClass="rounded-button ui-button-warning" disableOnAjax="false" action="#{hospitalViewController.editar(hospital.idHospital)}" />
+        <p:commandButton  icon="pi pi-trash" styleClass="rounded-button ui-button-danger" disableOnAjax="false" action="#{hospitalViewController.eliminar(hospital.idHospital)}" />
     </p:column>
     
    
