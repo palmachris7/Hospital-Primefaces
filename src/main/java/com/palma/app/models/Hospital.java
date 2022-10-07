@@ -19,7 +19,7 @@ import lombok.Data;
 @Entity
 @Table(name = "HOSPITAL")
 @NamedStoredProcedureQueries({
-		@NamedStoredProcedureQuery(name = "addHospitalProcedure", procedureName = "PKG_HOSPITALES_CRUD.PROC_REGISTRAR_HOSPITAL", parameters = {
+		@NamedStoredProcedureQuery(name = "addHospital", procedureName = "PKG_HOSPITALES_CRUD.PROC_REGISTRAR_HOSPITAL", parameters = {
 			    @StoredProcedureParameter(name = "pidhospital", type = Integer.class, mode = ParameterMode.IN),
 				@StoredProcedureParameter(name = "pantiguedad", type = Integer.class, mode = ParameterMode.IN),
 				@StoredProcedureParameter(name = "parea", type = Double.class, mode = ParameterMode.IN),
@@ -32,7 +32,7 @@ import lombok.Data;
 				@StoredProcedureParameter(name = "pimagen", type = String.class, mode = ParameterMode.IN),
 				@StoredProcedureParameter(name = "pdetalles", type = String.class, mode = ParameterMode.IN)
 		}),
-		@NamedStoredProcedureQuery(name = "editHospitalProcedure", procedureName = "PKG_HOSPITALES_CRUD.PROC_EDITAR_HOSPITAL", parameters = {
+		@NamedStoredProcedureQuery(name = "editHospital", procedureName = "PKG_HOSPITALES_CRUD.PROC_EDITAR_HOSPITAL", parameters = {
 			@StoredProcedureParameter(name = "pidhospital", type = Integer.class, mode = ParameterMode.IN),
 			@StoredProcedureParameter(name = "pantiguedad", type = Integer.class, mode = ParameterMode.IN),
 			@StoredProcedureParameter(name = "parea", type = Double.class, mode = ParameterMode.IN),

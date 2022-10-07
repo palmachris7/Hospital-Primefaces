@@ -29,7 +29,7 @@ public interface HospitalRepository extends JpaRepository<Hospital,Long> {
     @Param("pidgerente") Integer idGerente, @Param("pidsede") Integer idSede, @Param("pimagen") String imagen,
     @Param("pdetalles") String detalles);
 
-    @Procedure(name = "updateHospital")
+    @Procedure(name = "editHospital")
     String updateHospital(
             @Param("pidhospital") Integer idhospital,
             @Param("pantiguedad") Integer antiguedad, @Param("parea") Double area, @Param("pfecharegistro") Date fecha,
