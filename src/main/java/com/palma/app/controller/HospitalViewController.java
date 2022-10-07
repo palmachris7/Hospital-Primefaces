@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.palma.app.models.Hospital;
 import com.palma.app.models.Sede;
-import com.palma.app.repositories.HospitalRepo;
+import com.palma.app.repositories.HospitalRepository;
+//import com.palma.app.repositories.Procedures;
 import com.palma.app.repositories.SedeRepository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,7 +24,7 @@ import java.util.Optional;
 @Data
 public class HospitalViewController {
 
-    private HospitalRepo hospitalRepository;
+    private HospitalRepository hospitalRepository;
     private SedeRepository sedeRepository;
     private List<Hospital> hospitales;
     private Hospital hospital;
@@ -33,7 +34,7 @@ public class HospitalViewController {
 
 
     @Autowired
-    public void setHospitalRepository(HospitalRepo hospitalRepository) {
+    public void setHospitalRepository(HospitalRepository hospitalRepository) {
         this.hospitalRepository = hospitalRepository;
     }
 
@@ -46,7 +47,7 @@ public class HospitalViewController {
     @PostConstruct 
     public void init() {
         hospital = new Hospital();
-       hospitales = hospitalRepository.buscarTodos();
+       hospitales = hospitalRepository.listarHospitalpro();
      //hospitales = hospitalRepository.findAll();
         sedes = sedeRepository.findAll();
     }
@@ -56,7 +57,7 @@ public class HospitalViewController {
     }
 
     public String regresar() {
-        hospitales = hospitalRepository.buscarTodos();
+        hospitales = hospitalRepository.listarHospitalpro();
         return "index.xhtml?faces-redirect=true";
     }
 
@@ -80,8 +81,8 @@ public class HospitalViewController {
         hospitales = hospitalRepository.findAll();
         return "index.xhtml?faces-redirect=true";
     }
-    @RequestMapping(value="obtieneTitulo", params="idDisco")
-	public @ModelAttribute("tituloDisco") Hospital obtieneTituloDisco(@ModelAttribute String nombre,@ModelAttribute Integer sede) {
+    @RequestMapping(value="obtieneHospital", params="idHospital")
+	public @ModelAttribute("nombre") Hospital buscarHospital(@ModelAttribute String nombre,@ModelAttribute Integer sede) {
 		Optional<Hospital> optional=hospitalRepository.searchHospital(nombre,sede);
 		if (optional.isPresent()) {
 			return optional.get();
